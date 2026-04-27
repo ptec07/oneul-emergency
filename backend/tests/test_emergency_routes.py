@@ -4,7 +4,11 @@ from app.main import app
 from app.routes import emergency_rooms
 
 
-def test_emergency_rooms_route_returns_sorted_envelope():
+def test_emergency_rooms_route_returns_sorted_envelope(monkeypatch):
+    class FakeSettings:
+        public_data_service_key = ""
+
+    monkeypatch.setattr(emergency_rooms, "Settings", FakeSettings)
     client = TestClient(app)
 
     response = client.get("/api/emergency-rooms", params={"lat": 37.5665, "lng": 126.9780, "radiusM": 5000})

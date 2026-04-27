@@ -4,7 +4,11 @@ from app.main import app
 from app.routes import pharmacies
 
 
-def test_open_now_pharmacies_route_returns_sorted_envelope():
+def test_open_now_pharmacies_route_returns_sorted_envelope(monkeypatch):
+    class FakeSettings:
+        public_data_service_key = ""
+
+    monkeypatch.setattr(pharmacies, "Settings", FakeSettings)
     client = TestClient(app)
 
     response = client.get(
