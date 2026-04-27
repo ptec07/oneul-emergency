@@ -15,7 +15,9 @@ def test_render_and_docker_deployment_files_exist_and_point_to_fastapi_app():
     assert backend_render.exists()
     assert root_render.exists()
 
-    assert "uvicorn app.main:app" in dockerfile.read_text(encoding="utf-8")
+    dockerfile_content = dockerfile.read_text(encoding="utf-8")
+    assert "uvicorn app.main:app" in dockerfile_content
+    assert "COPY tests/fixtures ./tests/fixtures" in dockerfile_content
     assert "uvicorn app.main:app" in procfile.read_text(encoding="utf-8")
     assert "healthCheckPath: /api/health" in backend_render.read_text(encoding="utf-8")
     assert "dockerfilePath: ./backend/Dockerfile" in root_render.read_text(encoding="utf-8")

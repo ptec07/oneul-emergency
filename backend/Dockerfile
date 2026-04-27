@@ -8,6 +8,7 @@ WORKDIR /app
 
 COPY pyproject.toml ./pyproject.toml
 COPY app ./app
+COPY tests/fixtures ./tests/fixtures
 
 RUN pip install --no-cache-dir .
 
