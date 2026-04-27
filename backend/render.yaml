@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: oneul-emergency-api
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeploy: false
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: ONEUL_EMERGENCY_PUBLIC_DATA_SERVICE_KEY
+        sync: false
+      - key: ONEUL_EMERGENCY_FRONTEND_ORIGIN
+        sync: false

@@ -1,0 +1,371 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #111827;
+  background: #fff7f7;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(100% - 32px, 720px);
+  min-height: 100vh;
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+.hero {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 32px 24px;
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(127, 29, 29, 0.16);
+}
+
+.eyebrow {
+  color: #dc2626;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 44px;
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  color: #4b5563;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.primary-action,
+.call-119 {
+  border: 0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.emergency,
+.call-119 {
+  color: white;
+  background: #dc2626;
+}
+
+.pharmacy {
+  color: white;
+  background: #16a34a;
+}
+
+.notice {
+  color: #7f1d1d;
+  font-weight: 700;
+  margin: 24px 0 0;
+}
+
+.facility-card {
+  border: 1px solid #fee2e2;
+  border-radius: 22px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 16px 48px rgba(127, 29, 29, 0.12);
+}
+
+.facility-card__header,
+.facility-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.status-badge {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #7f1d1d;
+  background: #fee2e2;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.facility-card__distance {
+  color: #374151;
+}
+
+.facility-card__title {
+  margin: 14px 0 8px;
+  font-size: 20px;
+}
+
+.facility-card__address {
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.facility-card__call,
+.facility-card__directions {
+  flex: 1;
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.facility-card__call {
+  color: #ffffff;
+  background: #dc2626;
+}
+
+.facility-card__call--disabled {
+  color: #6b7280;
+  background: #e5e7eb;
+}
+
+.facility-card__directions {
+  color: #ffffff;
+  background: #2563eb;
+}
+
+.location-prompt {
+  display: grid;
+  gap: 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 22px;
+  padding: 20px;
+  background: #eff6ff;
+}
+
+.location-prompt h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.location-prompt__description,
+.location-prompt__fallback,
+.location-prompt__warning {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.location-prompt__warning {
+  color: #991b1b;
+  font-weight: 800;
+}
+
+.location-prompt__button,
+.location-prompt__search-button {
+  border: 0;
+  border-radius: 16px;
+  padding: 16px 18px;
+  color: #ffffff;
+  background: #2563eb;
+  font-weight: 800;
+}
+
+.location-prompt__button:disabled {
+  cursor: not-allowed;
+  color: #6b7280;
+  background: #d1d5db;
+}
+
+.location-prompt__form,
+.location-prompt__label {
+  display: grid;
+  gap: 8px;
+}
+
+.location-prompt__label {
+  font-weight: 800;
+}
+
+.location-prompt__input {
+  border: 1px solid #93c5fd;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font: inherit;
+}
+
+.facility-list {
+  display: grid;
+  gap: 16px;
+}
+
+.facility-list__header {
+  border-radius: 22px;
+  padding: 20px;
+  color: #7f1d1d;
+  background: #fff1f2;
+}
+
+.facility-list__header h2,
+.facility-list__header p {
+  margin: 0;
+}
+
+.facility-list__header p {
+  margin-top: 8px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.facility-list__items {
+  display: grid;
+  gap: 14px;
+}
+
+.facility-list__empty,
+.search-error,
+.search-status {
+  border-radius: 18px;
+  padding: 16px 18px;
+  font-weight: 800;
+}
+
+.facility-list__empty,
+.search-status {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.search-error {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.offline-note {
+  border: 1px solid #fde68a;
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin: 0;
+  color: #78350f;
+  background: #fffbeb;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.map-preview,
+.facility-detail {
+  border: 1px solid #dbeafe;
+  border-radius: 22px;
+  padding: 18px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgba(30, 64, 175, 0.1);
+}
+
+.map-preview h3,
+.facility-detail h2 {
+  margin: 0 0 8px;
+}
+
+.map-preview p,
+.facility-detail p {
+  line-height: 1.5;
+}
+
+.map-preview ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 20px;
+}
+
+.map-preview a {
+  color: #1d4ed8;
+  font-weight: 800;
+}
+
+.facility-card__details {
+  flex: 1;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #111827;
+  background: #fde68a;
+  font-weight: 800;
+}
+
+.facility-detail__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.facility-detail__header button {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: #ffffff;
+  background: #374151;
+  font-weight: 800;
+}
+
+.facility-detail__status,
+.facility-detail__notice {
+  color: #991b1b;
+  font-weight: 800;
+}
+
+.facility-detail dl {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.facility-detail dt {
+  color: #6b7280;
+  font-weight: 800;
+}
+
+.facility-detail dd {
+  margin: 4px 0 0;
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: min(100% - 20px, 720px);
+    padding: 12px 0 24px;
+  }
+
+  .hero {
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  .facility-card__actions {
+    display: grid;
+  }
+
+  .facility-card__call,
+  .facility-card__directions,
+  .facility-card__details {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,16 @@
+<response>
+  <body>
+    <items>
+      <item>
+        <hpid>PHARM001</hpid>
+        <dutyName>OO온누리약국</dutyName>
+        <dutyAddr>서울특별시 중구 세종대로 2</dutyAddr>
+        <dutyTel1>02-1111-2222</dutyTel1>
+        <wgs84Lat>37.5651</wgs84Lat>
+        <wgs84Lon>126.9895</wgs84Lon>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2200</dutyTime1c>
+      </item>
+    </items>
+  </body>
+</response>

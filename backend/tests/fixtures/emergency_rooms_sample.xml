@@ -1,0 +1,16 @@
+<response>
+  <body>
+    <items>
+      <item>
+        <hpid>A1100010</hpid>
+        <dutyName>서울OO병원</dutyName>
+        <dutyAddr>서울특별시 중구 세종대로 1</dutyAddr>
+        <dutyTel1>02-0000-0000</dutyTel1>
+        <dutyTel3>02-0000-0001</dutyTel3>
+        <wgs84Lat>37.5665</wgs84Lat>
+        <wgs84Lon>126.9780</wgs84Lon>
+        <dutyEmclsName>권역응급의료센터</dutyEmclsName>
+      </item>
+    </items>
+  </body>
+</response>
