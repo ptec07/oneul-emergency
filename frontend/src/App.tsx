@@ -9,8 +9,8 @@ import './styles.css'
 const ERROR_MESSAGE = '현재 정보를 불러오지 못했습니다. 잠시 후 다시 시도하거나 119/기관 전화 확인을 이용하세요.'
 const LOCATION_ERROR_MESSAGE = '현재 위치를 확인하지 못했습니다. 위치 권한을 허용하거나 주소/지역명으로 검색해 주세요.'
 const ADDRESS_NOT_FOUND_MESSAGE = '입력한 주소나 지역명을 찾지 못했습니다. 다른 검색어로 다시 시도해 주세요.'
-const EMERGENCY_SEARCH_RADIUS_M = 15000
-const PHARMACY_SEARCH_RADIUS_M = 10000
+const EMERGENCY_SEARCH_RADIUS_M = 20000
+const PHARMACY_SEARCH_RADIUS_M = 20000
 
 type ActiveSearch = 'emergency' | 'pharmacy' | null
 

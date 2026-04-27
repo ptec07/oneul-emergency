@@ -69,7 +69,7 @@ describe('오늘응급 검색 흐름', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: '가까운 응급실 찾기' }))
 
-    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 15000 }))
+    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 20000 }))
     expect(mockFetchEmergencyRooms).not.toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 5000 })
     expect(await screen.findByRole('heading', { name: '가까운 응급실' })).toBeInTheDocument()
     expect(screen.getByText('남양주OO병원 응급실')).toBeInTheDocument()
@@ -115,7 +115,7 @@ describe('오늘응급 검색 흐름', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: '지금 문 연 약국 찾기' }))
 
-    await waitFor(() => expect(mockFetchOpenPharmacies).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 10000 }))
+    await waitFor(() => expect(mockFetchOpenPharmacies).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 20000 }))
     expect(mockFetchOpenPharmacies).not.toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 3000 })
     expect(await screen.findByRole('heading', { name: '지금 문 연 약국' })).toBeInTheDocument()
     expect(screen.getByText('남양주OO약국')).toBeInTheDocument()
@@ -181,7 +181,7 @@ describe('오늘응급 검색 흐름', () => {
     fireEvent.click(screen.getByRole('button', { name: '현재 위치로 찾기' }))
 
     expect(getCurrentPosition).toHaveBeenCalledTimes(1)
-    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.501, lng: 127.039, radiusM: 15000 }))
+    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.501, lng: 127.039, radiusM: 20000 }))
   })
 
   it('shows a permission guidance message when current location cannot be read', async () => {
@@ -216,7 +216,7 @@ describe('오늘응급 검색 흐름', () => {
     fireEvent.click(screen.getByRole('button', { name: '주소로 찾기' }))
 
     await waitFor(() => expect(mockFetchGeocode).toHaveBeenCalledWith('강남역'))
-    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.4979, lng: 127.0276, radiusM: 15000 }))
+    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.4979, lng: 127.0276, radiusM: 20000 }))
   })
 
   it('opens a detail panel with source, updated time, and call confirmation guidance', async () => {
