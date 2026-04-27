@@ -60,3 +60,25 @@ def test_parse_pharmacies_xml_does_not_crash_on_invalid_coordinates():
 
     assert pharmacies[0]["latitude"] is None
     assert pharmacies[0]["longitude"] is None
+
+
+def test_parse_pharmacies_xml_supports_location_endpoint_fields():
+    xml_text = """
+    <response><body><items><item>
+      <hpid>C2102279</hpid>
+      <dutyName>온누리약국</dutyName>
+      <dutyAddr>경기도 남양주시 경춘로 997, (금곡동)</dutyAddr>
+      <dutyTel1>031-592-5916</dutyTel1>
+      <latitude>37.6352273377</latitude>
+      <longitude>127.212417528</longitude>
+      <startTime>0900</startTime>
+      <endTime>2130</endTime>
+    </item></items></body></response>
+    """
+
+    pharmacies = parse_pharmacies_xml(xml_text)
+
+    assert pharmacies[0]["name"] == "온누리약국"
+    assert pharmacies[0]["latitude"] == 37.6352273377
+    assert pharmacies[0]["longitude"] == 127.212417528
+    assert pharmacies[0]["todayHours"] == "09:00~21:30"

@@ -38,7 +38,7 @@ def test_fetch_pharmacies_xml_calls_public_data_endpoint_with_coordinates():
     assert xml_text.startswith("<response>")
     assert len(requests) == 1
     request = requests[0]
-    assert request.url.path.endswith("/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire")
+    assert request.url.path.endswith("/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire")
     assert request.url.params["serviceKey"] == "test-key"
     assert request.url.params["WGS84_LAT"] == "37.4979"
     assert request.url.params["WGS84_LON"] == "127.0276"

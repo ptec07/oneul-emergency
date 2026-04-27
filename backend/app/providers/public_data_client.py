@@ -4,7 +4,7 @@ import httpx
 
 PUBLIC_DATA_BASE_URL = "https://apis.data.go.kr"
 EMERGENCY_ROOMS_PATH = "/B552657/ErmctInfoInqireService/getEgytListInfoInqire"
-PHARMACIES_PATH = "/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire"
+PHARMACIES_PATH = "/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire"
 
 
 def _fetch_xml(

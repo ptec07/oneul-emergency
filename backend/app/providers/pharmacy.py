@@ -38,8 +38,8 @@ def _format_hhmm(value: str | None) -> str | None:
 
 
 def _today_hours(item: ElementTree.Element) -> str | None:
-    start = _format_hhmm(_text(item, "dutyTime1s"))
-    close = _format_hhmm(_text(item, "dutyTime1c"))
+    start = _format_hhmm(_text(item, "dutyTime1s") or _text(item, "startTime"))
+    close = _format_hhmm(_text(item, "dutyTime1c") or _text(item, "endTime"))
     if not start or not close:
         return None
     return f"{start}~{close}"
@@ -55,8 +55,8 @@ def parse_pharmacies_xml(xml_text: str) -> list[dict]:
                 "name": _text(item, "dutyName") or "",
                 "address": _text(item, "dutyAddr") or "",
                 "phone": _text(item, "dutyTel1"),
-                "latitude": _float_or_none(_text(item, "wgs84Lat")),
-                "longitude": _float_or_none(_text(item, "wgs84Lon")),
+                "latitude": _float_or_none(_text(item, "wgs84Lat") or _text(item, "latitude")),
+                "longitude": _float_or_none(_text(item, "wgs84Lon") or _text(item, "longitude")),
                 "openStatus": "CALL_REQUIRED",
                 "openStatusLabel": "전화 확인 필요",
                 "todayHours": _today_hours(item),
