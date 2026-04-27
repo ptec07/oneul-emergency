@@ -29,17 +29,37 @@ describe('오늘응급 검색 흐름', () => {
     expect(screen.getByText('오프라인 상태에서는 마지막으로 불러온 안내와 전화 확인 문구를 우선 보여줍니다.')).toBeInTheDocument()
   })
 
-  it('loads nearby emergency rooms when the emergency button is clicked', async () => {
+  it('uses browser geolocation instead of a Seoul default when the emergency button is clicked', async () => {
+    const getCurrentPosition = vi.fn((success: PositionCallback) => {
+      success({
+        coords: {
+          latitude: 37.636,
+          longitude: 127.216,
+          accuracy: 20,
+          altitude: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
+          toJSON: () => ({}),
+        },
+        timestamp: 1234,
+        toJSON: () => ({}),
+      })
+    })
+    Object.defineProperty(navigator, 'geolocation', {
+      configurable: true,
+      value: { getCurrentPosition },
+    })
     mockFetchEmergencyRooms.mockResolvedValue({
       items: [
         {
-          name: '서울OO병원 응급실',
+          name: '남양주OO병원 응급실',
           distanceM: 1240,
           statusLabel: '전화 확인 필요',
-          address: '서울특별시 중구 세종대로 110',
-          phone: '02-0000-0001',
-          latitude: 37.5665,
-          longitude: 126.978,
+          address: '경기도 남양주시',
+          phone: '031-0000-0001',
+          latitude: 37.636,
+          longitude: 127.216,
         },
       ],
       count: 1,
@@ -49,22 +69,43 @@ describe('오늘응급 검색 흐름', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: '가까운 응급실 찾기' }))
 
-    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 5000 }))
+    await waitFor(() => expect(mockFetchEmergencyRooms).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 5000 }))
+    expect(mockFetchEmergencyRooms).not.toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 5000 })
     expect(await screen.findByRole('heading', { name: '가까운 응급실' })).toBeInTheDocument()
-    expect(screen.getByText('서울OO병원 응급실')).toBeInTheDocument()
+    expect(screen.getByText('남양주OO병원 응급실')).toBeInTheDocument()
   })
 
-  it('loads currently open pharmacies when the pharmacy button is clicked', async () => {
+  it('uses browser geolocation instead of a Seoul default when the pharmacy button is clicked', async () => {
+    const getCurrentPosition = vi.fn((success: PositionCallback) => {
+      success({
+        coords: {
+          latitude: 37.636,
+          longitude: 127.216,
+          accuracy: 20,
+          altitude: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
+          toJSON: () => ({}),
+        },
+        timestamp: 1234,
+        toJSON: () => ({}),
+      })
+    })
+    Object.defineProperty(navigator, 'geolocation', {
+      configurable: true,
+      value: { getCurrentPosition },
+    })
     mockFetchOpenPharmacies.mockResolvedValue({
       items: [
         {
-          name: 'OO온누리약국',
+          name: '남양주OO약국',
           distanceM: 850,
           statusLabel: '현재 운영 중',
-          address: '서울특별시 중구 세종대로 111',
-          phone: '02-0000-0002',
-          latitude: 37.565,
-          longitude: 126.977,
+          address: '경기도 남양주시',
+          phone: '031-0000-0002',
+          latitude: 37.635,
+          longitude: 127.217,
         },
       ],
       count: 1,
@@ -74,12 +115,33 @@ describe('오늘응급 검색 흐름', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: '지금 문 연 약국 찾기' }))
 
-    await waitFor(() => expect(mockFetchOpenPharmacies).toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 3000 }))
+    await waitFor(() => expect(mockFetchOpenPharmacies).toHaveBeenCalledWith({ lat: 37.636, lng: 127.216, radiusM: 3000 }))
+    expect(mockFetchOpenPharmacies).not.toHaveBeenCalledWith({ lat: 37.5665, lng: 126.978, radiusM: 3000 })
     expect(await screen.findByRole('heading', { name: '지금 문 연 약국' })).toBeInTheDocument()
-    expect(screen.getByText('OO온누리약국')).toBeInTheDocument()
+    expect(screen.getByText('남양주OO약국')).toBeInTheDocument()
   })
 
   it('shows a visible error when search fails', async () => {
+    const getCurrentPosition = vi.fn((success: PositionCallback) => {
+      success({
+        coords: {
+          latitude: 37.636,
+          longitude: 127.216,
+          accuracy: 20,
+          altitude: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
+          toJSON: () => ({}),
+        },
+        timestamp: 1234,
+        toJSON: () => ({}),
+      })
+    })
+    Object.defineProperty(navigator, 'geolocation', {
+      configurable: true,
+      value: { getCurrentPosition },
+    })
     mockFetchEmergencyRooms.mockRejectedValue(new Error('network down'))
 
     render(<App />)
@@ -158,6 +220,26 @@ describe('오늘응급 검색 흐름', () => {
   })
 
   it('opens a detail panel with source, updated time, and call confirmation guidance', async () => {
+    const getCurrentPosition = vi.fn((success: PositionCallback) => {
+      success({
+        coords: {
+          latitude: 37.636,
+          longitude: 127.216,
+          accuracy: 20,
+          altitude: null,
+          altitudeAccuracy: null,
+          heading: null,
+          speed: null,
+          toJSON: () => ({}),
+        },
+        timestamp: 1234,
+        toJSON: () => ({}),
+      })
+    })
+    Object.defineProperty(navigator, 'geolocation', {
+      configurable: true,
+      value: { getCurrentPosition },
+    })
     mockFetchEmergencyRooms.mockResolvedValue({
       items: [
         {

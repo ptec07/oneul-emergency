@@ -6,7 +6,6 @@ import { FacilityList, type FacilityListItem } from './components/FacilityList'
 import { LocationPrompt } from './components/LocationPrompt'
 import './styles.css'
 
-const DEFAULT_LOCATION = { lat: 37.5665, lng: 126.978 }
 const ERROR_MESSAGE = '현재 정보를 불러오지 못했습니다. 잠시 후 다시 시도하거나 119/기관 전화 확인을 이용하세요.'
 const LOCATION_ERROR_MESSAGE = '현재 위치를 확인하지 못했습니다. 위치 권한을 허용하거나 주소/지역명으로 검색해 주세요.'
 const ADDRESS_NOT_FOUND_MESSAGE = '입력한 주소나 지역명을 찾지 못했습니다. 다른 검색어로 다시 시도해 주세요.'
@@ -60,7 +59,7 @@ export default function App() {
   const [permissionState, setPermissionState] = useState<'prompt' | 'granted' | 'denied'>('prompt')
   const [selectedFacility, setSelectedFacility] = useState<FacilityListItem | null>(null)
 
-  async function runEmergencySearch(location: SearchLocation = DEFAULT_LOCATION) {
+  async function runEmergencySearch(location: SearchLocation) {
     setActiveSearch('emergency')
     setIsLoading(true)
     setErrorMessage(null)
@@ -77,7 +76,25 @@ export default function App() {
     }
   }
 
-  async function runCurrentLocationSearch() {
+  async function runPharmacySearch(location: SearchLocation) {
+    setActiveSearch('pharmacy')
+    setIsLoading(true)
+    setErrorMessage(null)
+    setResult(null)
+    setSelectedFacility(null)
+
+    try {
+      const response = await fetchOpenPharmacies({ ...location, radiusM: 3000 })
+      setResult(response)
+    } catch {
+      setErrorMessage(ERROR_MESSAGE)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  async function runCurrentLocationSearch(searchType: Exclude<ActiveSearch, null> = 'emergency') {
+    setActiveSearch(searchType)
     setIsLoading(true)
     setErrorMessage(null)
     setResult(null)
@@ -86,7 +103,11 @@ export default function App() {
     try {
       const location = await getCurrentCoordinates()
       setPermissionState('granted')
-      await runEmergencySearch(location)
+      if (searchType === 'pharmacy') {
+        await runPharmacySearch(location)
+      } else {
+        await runEmergencySearch(location)
+      }
     } catch {
       setPermissionState('denied')
       setErrorMessage(LOCATION_ERROR_MESSAGE)
@@ -117,23 +138,6 @@ export default function App() {
     }
   }
 
-  async function runPharmacySearch() {
-    setActiveSearch('pharmacy')
-    setIsLoading(true)
-    setErrorMessage(null)
-    setResult(null)
-    setSelectedFacility(null)
-
-    try {
-      const response = await fetchOpenPharmacies({ ...DEFAULT_LOCATION, radiusM: 3000 })
-      setResult(response)
-    } catch {
-      setErrorMessage(ERROR_MESSAGE)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   const title = activeSearch === 'pharmacy' ? '지금 문 연 약국' : '가까운 응급실'
   const facilities = result?.items.map(toFacilityListItem) ?? []
 
@@ -144,10 +148,10 @@ export default function App() {
         <h1 id="home-title">오늘응급</h1>
         <p className="subtitle">내 주변 응급실과 지금 문 연 약국을 빠르게 찾으세요.</p>
         <div className="actions" aria-label="주요 기능">
-          <button type="button" className="primary-action emergency" onClick={() => void runEmergencySearch()}>
+          <button type="button" className="primary-action emergency" onClick={() => void runCurrentLocationSearch('emergency')}>
             가까운 응급실 찾기
           </button>
-          <button type="button" className="primary-action pharmacy" onClick={runPharmacySearch}>
+          <button type="button" className="primary-action pharmacy" onClick={() => void runCurrentLocationSearch('pharmacy')}>
             지금 문 연 약국 찾기
           </button>
           <a className="call-119" href="tel:119">
